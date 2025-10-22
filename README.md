@@ -1,4 +1,4 @@
-# CS472-Final-Project
+# CS489-Final-Project
 
 To run this project,
 
