@@ -1,0 +1,33 @@
+# Node
+node_modules/
+npm-debug.log
+
+# React
+/client/.env.local
+/client/.env.development.local
+/client/.env.test.local
+/client/.env.production.local
+/client/build
+/client/node_modules
+
+# Express
+/server/.env.local
+/server/.env.development.local
+/server/.env.test.local
+/server/.env.production.local
+/server/logs
+/server/uploads
+/server/node_modules
+/server/package-lock.json
+/server/dist
+/server/src/data/env.ts
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Mac
+.DS_Store

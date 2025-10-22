@@ -1,0 +1,13 @@
+const products = [
+  {
+    id: 1,
+    name: "Product 1",
+    description: "Description for Product 1",
+    category: "Category 1",
+    price: 10.0,
+    dateAdded: "2023-01-01",
+    averageRating: 4.5,
+    imageUrl: "https://placeholder.co/150",
+  },
+  
+];

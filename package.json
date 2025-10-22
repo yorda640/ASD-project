@@ -1,0 +1,24 @@
+{
+  "name": "cs472-final-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "cd client && npm run build",
+    "test": "cd client && npm test",
+    "server": "cd server && nodemon --exec ts-node src/app.ts",
+    "client": "cd client && npm start",
+    "server:build": "cd server && tsc",
+    "server:start": "cd server && node build/index.js"
+  },
+  
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+ 
+  "dependencies": {
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.10"
+  }
+}

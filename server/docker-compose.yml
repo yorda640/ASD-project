@@ -1,0 +1,24 @@
+
+services:
+  api:
+    build: .
+    container_name: express-api
+    restart: always
+    env_file: .env
+    ports:
+      - "8000:8000"      # host:container
+    depends_on:
+      - mongo
+    command: npm start   # ensures same as Dockerfile CMD
+
+  mongo:
+    image: mongo:6
+    container_name: mongo-db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
