@@ -7,12 +7,14 @@ import { useParams } from "react-router";
 import { RatingDisplay } from "../components/RatingDisplay";
 import { API_URI } from "../config/env";
 import { IReview } from "../types/review";
+import { useAuth } from "../hooks/useAuth";
 
 export default function SingleProduct() {
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [isUpdating, setIsUpdating] = useState(false);
   const [currentReview, setCurrentReview] = useState("");
   const { id } = useParams();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     async function getProductReviews() {
@@ -76,54 +78,54 @@ export default function SingleProduct() {
     <>
       <div className="row mb-5">
         <div className="col-lg-12 ">
-          <Formik
-            initialValues={{ author: "", comment: "", rating: "" }}
-            onSubmit={(values) => handleReviewSubmit(values)}
-          >
-            <Form>
-              <div className="row">
-                <div className="col-lg-6">
-                  <label htmlFor="author">Author Name</label>
-                  <Field
-                    id="author"
-                    name="author"
-                    placeholder="Author"
-                    className="form-control"
-                  />
+          {isAuthenticated && (
+            <Formik
+              initialValues={{ author: "", comment: "", rating: "" }}
+              onSubmit={(values) => handleReviewSubmit(values)}
+            >
+              <Form>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <label htmlFor="author">Author Name</label>
+                    <Field
+                      id="author"
+                      name="author"
+                      placeholder="Author"
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="col-lg-6">
+                    <label htmlFor="title">Rating out 5</label>
+                    <Field as="select" name="rating" className="form-control">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </Field>
+                  </div>
+                  <div className="col-sm-12 mt-2">
+                    <label htmlFor="title">Comment</label>
+                    <Field
+                      id="comment"
+                      name="comment"
+                      placeholder="Comment"
+                      className="form-control"
+                      as="textarea"
+                    />
+                  </div>
                 </div>
-                <div className="col-lg-6">
-                  <label htmlFor="title">Rating out 5</label>
-                  <Field as="select" name="rating" className="form-control">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </Field>
-                </div>
-                <div className="col-sm-12 mt-2">
-                  <label htmlFor="title">Comment</label>
-                  <Field
-                    id="comment"
-                    name="comment"
-                    placeholder="Comment"
-                    className="form-control"
-                    as="textarea"
-                  />
-                </div>
-              </div>
-              <Button type="submit" className="btn btn-dark mt-3">
-                Submit Review
-              </Button>
-            </Form>
-          </Formik>
+                <Button type="submit" className="btn btn-dark mt-3">
+                  Submit Review
+                </Button>
+              </Form>
+            </Formik>
+          )}
+          {!isAuthenticated && <p>Please login to submit a review.</p>}
         </div>
         <hr className="mt-3" />
       </div>
       <div className="row">
-        <div className="col-lg-12">
-          product id: <strong>{id}</strong>
-        </div>
         {reviews.length !== 0 ? (
           reviews.map((review, _index) => (
             <div className="col-lg-12 mb-2" key={_index}>

@@ -4,10 +4,15 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { API_URI } from "../config/env";
 import { useApplicationContext } from "../context/AppContext";
+import { ModalComponent } from "./ModalComponent";
+import { useState } from "react";
+import AuthenticatePage from "../pages/AuthenticatePage";
+import { useAuth } from "../hooks/useAuth";
 
 function NavbarComponent({ onClick }: { onClick: () => void }) {
+  const { isAuthenticated, logout } = useAuth();
   const { getProducts } = useApplicationContext();
-
+  const [modalShow, setModalShow] = useState(false);
   async function handleSubmit(values: { title: string; category: string }) {
     const url = `${API_URI}/products/search?q=${values.title}&${values.category}`;
     if (values) {
@@ -25,7 +30,7 @@ function NavbarComponent({ onClick }: { onClick: () => void }) {
             initialValues={{ title: "", category: "" }}
             onSubmit={(value) => handleSubmit(value)}
           >
-            <Form className="d-flex">
+            <Form className="d-flex gap-2">
               <InputGroup>
                 <Field
                   name="title"
@@ -46,12 +51,36 @@ function NavbarComponent({ onClick }: { onClick: () => void }) {
         </Nav>
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            <Button variant="light" onClick={onClick}>
-              + Add Product
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Button variant="light" onClick={onClick}>
+                  + Add Product
+                </Button>
+                <Button variant="danger" onClick={logout} className="ms-2">
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="primary"
+                  onClick={() => setModalShow(true)}
+                  className="ms-2"
+                >
+                  Login
+                </Button>
+              </>
+            )}
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>
+      <ModalComponent
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        title={"Add Product"}
+      >
+        <AuthenticatePage />
+      </ModalComponent>
     </Navbar>
   );
 }

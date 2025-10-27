@@ -12,7 +12,6 @@ import SingleProduct from "./pages/SingleProduct";
 
 function App() {
   const [modalShow, setModalShow] = useState(false);
-
   const { getProducts, addProduct } = useApplicationContext();
 
   async function fetchProducts(url: string) {
@@ -23,7 +22,7 @@ function App() {
     fetchProducts(`${API_URI}/products/search?q=`);
   }, []);
 
-  async function handleAddProduct(values) {
+  async function handleAddProduct(values: any) {
     try {
       await addProduct(values);
     } catch (error) {
@@ -33,7 +32,7 @@ function App() {
 
   return (
     <>
-      <NavbarComponent onClick={() => setModalShow(!modalShow)} />
+      <NavbarComponent onClick={() => setModalShow(!modalShow)} />x
       <Routes>
         <Route path="/" element={<HomePage />}>
           <Route index path="/:id" element={<SingleProduct />} />

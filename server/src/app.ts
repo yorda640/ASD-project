@@ -6,6 +6,8 @@ import { connectDB } from "./config/db";
 import { PORT } from "./config/env";
 import productRouter from "./routes/product.route";
 import reviewRouter from "./routes/review.route";
+import authRouter from "./routes/auth.route";
+import { protect } from "./middleware/auth";
 // import reviewRouter from "./routes/review.route";
 
 dotenv.config();
@@ -17,6 +19,7 @@ app.use(morgan("dev"));
 
 app.use("/products", productRouter);
 app.use("/reviews", reviewRouter);
+app.use("/auth", authRouter);
 
 (async (port) => {
   await connectDB();

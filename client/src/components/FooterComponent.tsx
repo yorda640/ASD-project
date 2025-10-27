@@ -29,9 +29,9 @@ function FooterComponent() {
     fetchWeather();
   }, []);
   return (
-    <footer className=" footer py-3 bg-light mt-4">
+    <footer className=" footer py-3 bg-light">
       <Container className="d-flex flex-wrap justify-content-between align-items-center">
-        <span className="mb-3 mb-md-0 text-body-secondary">
+        <span className=" mb-md-0 text-body-secondary">
           &copy;{new Date().getFullYear()} Yordanos
         </span>
         <div>
